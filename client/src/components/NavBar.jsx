@@ -29,6 +29,9 @@ export default function NavBar() {
           <Nav.Link as={NavLink} to="/shop">
             Shop
           </Nav.Link>
+          <Nav.Link as={NavLink} to="/upload">
+            Upload course
+          </Nav.Link>
           <NavDropdown title="Account" id="basic-nav-dropdown">
             <NavDropdown.Item as={NavLink} to="/account">
               My Account

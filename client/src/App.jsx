@@ -1,14 +1,16 @@
 import OTP from './pages/OTP';
 import Shop from './pages/Shop';
 import Login from './pages/Login';
-import Library from './pages/Library';
 import Class from './pages/Class';
+import Library from './pages/Library';
 import NavBar from './components/NavBar';
+import UploadForm from './pages/Upload';
 import {AuthProvider} from './contexts/Auth.context';
 import FeaturedCourses from './pages/FeaturedCourses';
 import {BrowserRouter, Routes, Route} from 'react-router-dom';
-import {FeaturedCoursesProvider} from './contexts/FeaturedCourses.context';
 import {ClassCoursesProvider} from './contexts/ClassCourses.context';
+import {FeaturedCoursesProvider} from './contexts/FeaturedCourses.context';
+import {UploadProvider} from './contexts/Upload.context';
 
 export default function App() {
   return (
@@ -17,14 +19,17 @@ export default function App() {
         <NavBar />
         <ClassCoursesProvider>
           <FeaturedCoursesProvider>
-            <Routes>
-              <Route index element={<FeaturedCourses />} />
-              <Route path="/shop" element={<Shop />} />
-              <Route path="/login" element={<Login />} />
-              <Route path="/otp" element={<OTP />} />
-              <Route path="/library" element={<Library />} />
-              <Route path="/class" element={<Class />} />
-            </Routes>
+            <UploadProvider>
+              <Routes>
+                <Route index element={<FeaturedCourses />} />
+                <Route path="/shop" element={<Shop />} />
+                <Route path="/login" element={<Login />} />
+                <Route path="/otp" element={<OTP />} />
+                <Route path="/library" element={<Library />} />
+                <Route path="/class" element={<Class />} />
+                <Route path="/upload" element={<UploadForm />} />
+              </Routes>
+            </UploadProvider>
           </FeaturedCoursesProvider>
         </ClassCoursesProvider>
       </AuthProvider>

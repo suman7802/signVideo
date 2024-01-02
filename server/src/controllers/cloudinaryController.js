@@ -6,14 +6,7 @@ import getCourseFromPublic_id from '../utils/getCourseFromPublic_id.js';
 
 const cloudinary = {
   upload: catchAsync(async (req, res, next) => {
-    // const {category, title} = req.body;
-
-    //  // // // // // // //
-    //
-    const title = 'pythagoreanTheorem';
-    const category = 'maths';
-    //
-    //  // // // // // //
+    const {category, title} = req.body;
 
     const author = req.user.email.split('@')[0];
     const files = (req.files && Object.values(req.files)) || [];
