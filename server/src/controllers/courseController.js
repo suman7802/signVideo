@@ -1,16 +1,7 @@
-import dotenv from 'dotenv';
-import {Stripe} from 'stripe';
-
 import User from '../models/userModel.js';
 import Course from '../models/courseModel.js';
 import catchAsync from '../errors/catchAsync.js';
 import customError from '../errors/customError.js';
-
-dotenv.config();
-const {PORT, SECRET_KEY} = process.env;
-
-const stripe = new Stripe(SECRET_KEY);
-const DOMAIN = `http://localhost:${PORT}`;
 
 const courseController = {
   buyCourse: catchAsync(async (req, res, next) => {
@@ -82,33 +73,6 @@ const courseController = {
     });
 
     await user.save();
-
-    // // // // // // // // // // // // // // payment // // // // // // // // // // // // // // // //
-
-    // const lineItems = courses.map((course) => {
-    //   return {
-    //     price_data: {
-    //       currency: course.currency,
-    //       product_data: {
-    //         name: course.course_name,
-    //       },
-    //       unit_amount: course.course_price * 100,
-    //     },
-    //     quantity: course.quantity,
-    //   };
-    // });
-
-    // const session = await stripe.checkout.sessions.create({
-    //   line_items: lineItems,
-    //   mode: 'payment',
-    //   success_url: `${DOMAIN}/success`,
-    //   cancel_url: `${DOMAIN}/cancel`,
-    // });
-
-    // res.status(303).redirect(session.url);
-
-    // // // // // // // // // // // // // // // // // // // // // // // // // // // // // //
-
     return res.status(200).send(user);
   }),
 
