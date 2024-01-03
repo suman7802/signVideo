@@ -11,6 +11,7 @@ import {BrowserRouter, Routes, Route} from 'react-router-dom';
 import {ClassCoursesProvider} from './contexts/ClassCourses.context';
 import {FeaturedCoursesProvider} from './contexts/FeaturedCourses.context';
 import {UploadProvider} from './contexts/Upload.context';
+import {ShopContextProvider} from './contexts/Shop.context';
 
 export default function App() {
   return (
@@ -20,15 +21,17 @@ export default function App() {
         <ClassCoursesProvider>
           <FeaturedCoursesProvider>
             <UploadProvider>
-              <Routes>
-                <Route index element={<FeaturedCourses />} />
-                <Route path="/shop" element={<Shop />} />
-                <Route path="/login" element={<Login />} />
-                <Route path="/otp" element={<OTP />} />
-                <Route path="/library" element={<Library />} />
-                <Route path="/class" element={<Class />} />
-                <Route path="/upload" element={<UploadForm />} />
-              </Routes>
+              <ShopContextProvider>
+                <Routes>
+                  <Route index element={<FeaturedCourses />} />
+                  <Route path="/shop" element={<Shop />} />
+                  <Route path="/login" element={<Login />} />
+                  <Route path="/otp" element={<OTP />} />
+                  <Route path="/library" element={<Library />} />
+                  <Route path="/class" element={<Class />} />
+                  <Route path="/upload" element={<UploadForm />} />
+                </Routes>
+              </ShopContextProvider>
             </UploadProvider>
           </FeaturedCoursesProvider>
         </ClassCoursesProvider>
