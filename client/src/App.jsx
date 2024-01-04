@@ -6,6 +6,7 @@ import Cart from './pages/Cart';
 import Library from './pages/Library';
 import NavBar from './components/NavBar';
 import UploadForm from './pages/Upload';
+import Logout from './pages/Logout';
 import {AuthProvider} from './contexts/Auth.context';
 import FeaturedCourses from './pages/FeaturedCourses';
 import {BrowserRouter, Routes, Route} from 'react-router-dom';
@@ -32,6 +33,7 @@ export default function App() {
                   <Route path="/class" element={<Class />} />
                   <Route path="/cart" element={<Cart />} />
                   <Route path="/upload" element={<UploadForm />} />
+                  <Route path="/logout" element={<Logout />} />
                 </Routes>
               </UploadProvider>
             </FeaturedCoursesProvider>

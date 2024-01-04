@@ -95,7 +95,11 @@ function AuthProvider({children}) {
   };
 
   const handleLogout = () => {
-    document.cookie = 'signVideo=;expires=Thu, 01 Jan 1970 00:00:01 GMT;';
+    console.log('logout');
+    document.cookie =
+      'signVideo=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
+    localStorage.clear();
+    // navigate('/login');
   };
 
   const reqOtp = async (event) => {

@@ -43,10 +43,6 @@ export default function NavBar() {
             Upload course
           </Nav.Link>
           <NavDropdown title="Account" id="basic-nav-dropdown">
-            <NavDropdown.Item as={NavLink} to="/account">
-              My Account
-            </NavDropdown.Item>
-            <NavDropdown.Divider />
             <NavDropdown.Item as={NavLink} to="/login">
               LogIn
             </NavDropdown.Item>
