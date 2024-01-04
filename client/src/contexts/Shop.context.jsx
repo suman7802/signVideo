@@ -1,7 +1,6 @@
 import {createContext, useState} from 'react';
 import PropTypes from 'prop-types';
 
-// const url = 'http://localhost:8000/api';
 const ShopContext = createContext();
 
 function ShopContextProvider({children}) {
@@ -10,8 +9,6 @@ function ShopContextProvider({children}) {
   const addToCart = (course) => {
     setCoursesToBuy((prevCourses) => [...prevCourses, course]);
   };
-
-  console.log(coursesToBuy);
 
   return (
     <ShopContext.Provider value={{coursesToBuy, addToCart}}>

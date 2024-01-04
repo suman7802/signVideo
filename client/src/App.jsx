@@ -17,11 +17,11 @@ export default function App() {
   return (
     <BrowserRouter>
       <AuthProvider>
-        <NavBar />
-        <ClassCoursesProvider>
-          <FeaturedCoursesProvider>
-            <UploadProvider>
-              <ShopContextProvider>
+        <ShopContextProvider>
+          <NavBar />
+          <ClassCoursesProvider>
+            <FeaturedCoursesProvider>
+              <UploadProvider>
                 <Routes>
                   <Route index element={<FeaturedCourses />} />
                   <Route path="/shop" element={<Shop />} />
@@ -31,10 +31,10 @@ export default function App() {
                   <Route path="/class" element={<Class />} />
                   <Route path="/upload" element={<UploadForm />} />
                 </Routes>
-              </ShopContextProvider>
-            </UploadProvider>
-          </FeaturedCoursesProvider>
-        </ClassCoursesProvider>
+              </UploadProvider>
+            </FeaturedCoursesProvider>
+          </ClassCoursesProvider>
+        </ShopContextProvider>
       </AuthProvider>
     </BrowserRouter>
   );
