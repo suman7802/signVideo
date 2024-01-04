@@ -32,17 +32,3 @@
 // res.status(303).redirect(session.url);
 
 // // // // // // // // // // // // // // // // // // // // // // // // // // // // // //
-
-
-[
-    {
-        "course": "chemistry",
-        "expirationDate": "2024-02-03T11:19:23.044Z",
-        "_id": "6596943b09ce9e1ba097907a"
-    },
-    {
-        "course": "physics",
-        "expirationDate": "2024-02-03T11:22:24.817Z",
-        "_id": "659694f009ce9e1ba097909d"
-    }
-]
