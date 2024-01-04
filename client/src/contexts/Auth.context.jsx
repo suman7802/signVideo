@@ -83,7 +83,6 @@ function AuthProvider({children}) {
   }, []);
 
   const saveToLocalStorage = (Authenticated, Role, Courses) => {
-    console.log('save to local storage called');
     if (Role) {
       localStorage.setItem('role', JSON.stringify(Role));
     }

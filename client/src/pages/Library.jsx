@@ -26,6 +26,17 @@ export default function Library() {
   const {featuredCourses} = context;
   const {setCategory} = classContext;
 
+  const uniqueFeaturedCourses = featuredCourses.reduce(
+    (unique, featuredCourse) => {
+      return unique.findIndex(
+        (course) => course.category === featuredCourse.category
+      ) < 0
+        ? [...unique, featuredCourse]
+        : unique;
+    },
+    []
+  );
+
   const handleCourseClick = (category) => {
     navigate('/class');
     setCategory(category);
@@ -35,7 +46,7 @@ export default function Library() {
     <Container>
       <h2>Subscribed subject list</h2>
       <Row>
-        {featuredCourses
+        {uniqueFeaturedCourses
           .filter((featuredCourse) =>
             courses.some((course) => course.course === featuredCourse.category)
           )
