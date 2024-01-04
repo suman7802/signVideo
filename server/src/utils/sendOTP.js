@@ -11,7 +11,7 @@ const {
   NODEMAILER_CLIENT_SECRET,
 } = process.env;
 
-const OAuth2 = google.auth.OAuth2;
+const {OAuth2} = google.auth;
 
 const createTransporter = async () => {
   const oauth2Client = new OAuth2(
@@ -33,7 +33,7 @@ const createTransporter = async () => {
     });
   });
 
-  const transporter = nodemailer.createTransport({
+  return nodemailer.createTransport({
     service: 'gmail',
     auth: {
       type: 'OAuth2',
@@ -44,7 +44,6 @@ const createTransporter = async () => {
       refreshToken: NODEMAILER_REFRESH_TOKEN,
     },
   });
-  return transporter;
 };
 
 const sendMailForOtp = (otp, email) => {

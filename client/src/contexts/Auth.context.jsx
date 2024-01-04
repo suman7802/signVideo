@@ -11,7 +11,7 @@ const initialState = {
   otp: '',
   role: '',
   email: '',
-  courses: [{}],
+  courses: [],
   admin: false,
   adminPassword: '',
   showPassword: false,
@@ -29,6 +29,8 @@ function reducer(state, action) {
       };
     case 'SET_ADMIN':
       return {...state, admin: !state.admin};
+    case 'UPDATE_COURSES':
+      return {...state, courses: action.payload};
     case 'SET_OTP':
       return {...state, otp: action.payload};
     case 'SET_EMAIL':
@@ -59,26 +61,31 @@ function AuthProvider({children}) {
   ] = useReducer(reducer, initialState);
 
   useEffect(() => {
-    const savedRole = JSON.parse(localStorage.getItem('role'));
-    const savedCourses = JSON.parse(localStorage.getItem('courses'));
-    const savedIsAuthenticated = JSON.parse(
-      localStorage.getItem('isAuthenticated')
-    );
-    if (savedIsAuthenticated === true) {
-      dispatch({
-        type: 'SET_AUTHENTICATED',
-        payload: {
-          role: savedRole,
-          courses: savedCourses,
-        },
-      });
+    const Role = localStorage.getItem('role');
+    const Courses = localStorage.getItem('courses');
+    const Authenticated = localStorage.getItem('isAuthenticated');
+
+    if ((Role, Courses, Authenticated)) {
+      const savedRole = Role ? JSON.parse(Role) : null;
+      const savedIsAuthenticated = JSON.parse(Authenticated);
+      const savedCourses = Courses ? JSON.parse(Courses) : null;
+
+      if (savedIsAuthenticated) {
+        dispatch({
+          type: 'SET_AUTHENTICATED',
+          payload: {
+            role: savedRole,
+            courses: savedCourses,
+          },
+        });
+      }
     }
   }, []);
 
-  const saveToLocalStorage = (role, courses, isAuthenticated) => {
-    localStorage.setItem('isAuthenticated', JSON.stringify(isAuthenticated));
-    localStorage.setItem('role', JSON.stringify(role));
-    localStorage.setItem('courses', JSON.stringify(courses));
+  const saveToLocalStorage = (Authenticated, Role, Courses) => {
+    localStorage.setItem('role', JSON.stringify(Role));
+    localStorage.setItem('courses', JSON.stringify(Courses));
+    localStorage.setItem('isAuthenticated', JSON.stringify(Authenticated));
   };
 
   const handleLogout = () => {
@@ -117,6 +124,10 @@ function AuthProvider({children}) {
       );
 
       if (res.status === 200) {
+        const Authenticated = true;
+        const Role = res.data.user.role;
+        const Courses = res.data.user.courses;
+
         dispatch({
           type: 'SET_AUTHENTICATED',
           payload: {
@@ -124,7 +135,8 @@ function AuthProvider({children}) {
             courses: res.data.user.courses,
           },
         });
-        saveToLocalStorage(role, courses, isAuthenticated);
+
+        saveToLocalStorage(Authenticated, Role, Courses);
         navigate('/library');
       }
     } catch (error) {
@@ -147,6 +159,7 @@ function AuthProvider({children}) {
         dispatch,
         submitOtp,
         handleLogout,
+        saveToLocalStorage,
       }}>
       {children}
     </AuthContext.Provider>
