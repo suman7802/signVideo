@@ -2,6 +2,7 @@ import OTP from './pages/OTP';
 import Shop from './pages/Shop';
 import Login from './pages/Login';
 import Class from './pages/Class';
+import Cart from './pages/Cart';
 import Library from './pages/Library';
 import NavBar from './components/NavBar';
 import UploadForm from './pages/Upload';
@@ -29,6 +30,7 @@ export default function App() {
                   <Route path="/otp" element={<OTP />} />
                   <Route path="/library" element={<Library />} />
                   <Route path="/class" element={<Class />} />
+                  <Route path="/cart" element={<Cart />} />
                   <Route path="/upload" element={<UploadForm />} />
                 </Routes>
               </UploadProvider>

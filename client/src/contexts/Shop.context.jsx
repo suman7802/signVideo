@@ -1,10 +1,28 @@
-import {createContext, useState} from 'react';
+import axios from 'axios';
 import PropTypes from 'prop-types';
+import {createContext, useState} from 'react';
 
+const url = 'http://localhost:8000/api';
 const ShopContext = createContext();
 
 function ShopContextProvider({children}) {
   const [coursesToBuy, setCoursesToBuy] = useState([]);
+
+  const checkout = async () => {
+    try {
+      const response = await axios.post(
+        `${url}/course/buy`,
+        {courses: coursesToBuy},
+        {withCredentials: true}
+      );
+
+      console.log(response.data.courses);
+
+      setCoursesToBuy([]);
+    } catch (error) {
+      console.error('Checkout failed', error);
+    }
+  };
 
   const addToCart = (course) => {
     setCoursesToBuy((prevCourses) => {
@@ -21,7 +39,7 @@ function ShopContextProvider({children}) {
   };
 
   return (
-    <ShopContext.Provider value={{coursesToBuy, addToCart}}>
+    <ShopContext.Provider value={{coursesToBuy, addToCart, checkout}}>
       {children}
     </ShopContext.Provider>
   );

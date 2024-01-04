@@ -10,7 +10,7 @@ export default function ShopItem({course}) {
   if (shop === undefined) {
     throw new Error('useShop must be used within a ShopProvider');
   }
-  
+
   const {addToCart} = shop;
 
   const data = {

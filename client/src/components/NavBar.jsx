@@ -13,6 +13,7 @@ import {useContext} from 'react';
 
 export default function NavBar() {
   const context = useContext(ShopContext);
+
   if (context === undefined) {
     throw new Error('useAuth must be used within a AuthProvider');
   }
