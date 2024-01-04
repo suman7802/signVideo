@@ -83,9 +83,16 @@ function AuthProvider({children}) {
   }, []);
 
   const saveToLocalStorage = (Authenticated, Role, Courses) => {
-    localStorage.setItem('role', JSON.stringify(Role));
-    localStorage.setItem('courses', JSON.stringify(Courses));
-    localStorage.setItem('isAuthenticated', JSON.stringify(Authenticated));
+    console.log('save to local storage called');
+    if (Role) {
+      localStorage.setItem('role', JSON.stringify(Role));
+    }
+    if (Courses) {
+      localStorage.setItem('courses', JSON.stringify(Courses));
+    }
+    if (Authenticated) {
+      localStorage.setItem('isAuthenticated', JSON.stringify(Authenticated));
+    }
   };
 
   const handleLogout = () => {

@@ -1,12 +1,22 @@
 import axios from 'axios';
 import PropTypes from 'prop-types';
-import {createContext, useState} from 'react';
+import {createContext, useState, useContext} from 'react';
+import {AuthContext} from './Auth.context';
 
 const url = 'http://localhost:8000/api';
 const ShopContext = createContext();
 
 function ShopContextProvider({children}) {
+  const context = useContext(AuthContext);
   const [coursesToBuy, setCoursesToBuy] = useState([]);
+
+  if (context === undefined) {
+    throw new Error(
+      'ShopContextProvider must be used within an AuthContextProvider'
+    );
+  }
+
+  const {dispatch, saveToLocalStorage} = context;
 
   const checkout = async () => {
     try {
@@ -16,7 +26,13 @@ function ShopContextProvider({children}) {
         {withCredentials: true}
       );
 
-      console.log(response.data.courses);
+      if (response.status === 200) {
+        dispatch({
+          type: 'UPDATE_COURSES',
+          payload: response.data.courses,
+        });
+        saveToLocalStorage(true, response.data.role, response.data.courses);
+      }
 
       setCoursesToBuy([]);
     } catch (error) {
