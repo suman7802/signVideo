@@ -8,8 +8,17 @@ import {
 } from 'react-bootstrap';
 import {NavLink} from 'react-router-dom';
 import CartLogo from '../assets/cart.svg';
+import {ShopContext} from '../contexts/Shop.context';
+import {useContext} from 'react';
 
 export default function NavBar() {
+  const context = useContext(ShopContext);
+  if (context === undefined) {
+    throw new Error('useAuth must be used within a AuthProvider');
+  }
+
+  const {coursesToBuy} = context;
+
   return (
     <Navbar
       bg="light"
@@ -64,7 +73,7 @@ export default function NavBar() {
                 alt="Cart"
                 style={{width: '30px', marginRight: '10px'}}
               />
-              Cart
+              {coursesToBuy.length > 0 && coursesToBuy.length} Cart
             </Nav.Link>
           </Nav>
         </div>

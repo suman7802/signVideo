@@ -7,7 +7,17 @@ function ShopContextProvider({children}) {
   const [coursesToBuy, setCoursesToBuy] = useState([]);
 
   const addToCart = (course) => {
-    setCoursesToBuy((prevCourses) => [...prevCourses, course]);
+    setCoursesToBuy((prevCourses) => {
+      const courseExists = prevCourses.some(
+        (prevCourse) => prevCourse.course_name === course.course_name
+      );
+
+      if (courseExists) {
+        return prevCourses;
+      } else {
+        return [...prevCourses, course];
+      }
+    });
   };
 
   return (
