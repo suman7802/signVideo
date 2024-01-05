@@ -38,9 +38,23 @@ export default function Shop() {
       <h2>Shop Course</h2>
       <Form>
         <Row>
-          {unsubscribedCourses.map((course) => (
-            <ShopItem key={course._id} course={course} />
-          ))}
+          {unsubscribedCourses.length > 0 ? (
+            unsubscribedCourses.map((course) => (
+              <ShopItem key={course._id} course={course} />
+            ))
+          ) : (
+            <div
+              style={{
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
+                height: '50vh',
+                fontSize: '1.5em',
+                color: '#333',
+              }}>
+              You have all courses subscribed.
+            </div>
+          )}
         </Row>
       </Form>
     </Container>

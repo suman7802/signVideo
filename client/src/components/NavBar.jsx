@@ -52,9 +52,6 @@ export default function NavBar() {
               Logout
             </NavDropdown.Item>
           </NavDropdown>
-          <Nav.Link as={NavLink} to="/disabled" disabled>
-            Disabled
-          </Nav.Link>
         </Nav>
         <div className="d-flex">
           {location.pathname === '/' && (
@@ -62,21 +59,23 @@ export default function NavBar() {
               <FormControl
                 type="text"
                 placeholder="Search"
-                className="mr-sm-2"
+                className="mr-sm-2 search-input"
                 onChange={(e) => search(e.target.value)}
               />
             </Form>
           )}
-          <Nav className="ml-auto">
-            <Nav.Link as={NavLink} to="/cart">
-              <img
-                src={CartLogo}
-                alt="Cart"
-                style={{width: '30px', marginRight: '10px'}}
-              />
-              {coursesToBuy.length > 0 && coursesToBuy.length} Cart
-            </Nav.Link>
-          </Nav>
+          {location.pathname === '/shop' && (
+            <Nav className="ml-auto">
+              <Nav.Link as={NavLink} to="/cart">
+                <img
+                  src={CartLogo}
+                  alt="Cart"
+                  style={{width: '30px', marginRight: '10px'}}
+                />
+                {coursesToBuy.length > 0 && coursesToBuy.length} Cart
+              </Nav.Link>
+            </Nav>
+          )}
         </div>
       </Navbar.Collapse>
     </Navbar>
