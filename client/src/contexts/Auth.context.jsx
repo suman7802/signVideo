@@ -94,6 +94,8 @@ function AuthProvider({children}) {
     }
   };
 
+  // todo: fix logout
+
   const handleLogout = () => {
     console.log('logout');
     document.cookie =

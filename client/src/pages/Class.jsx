@@ -25,7 +25,12 @@ export default function Class() {
                 src={course.thumbnail_url}
                 alt={course.title}
                 className={`card-img-top`}
-                style={{cursor: 'pointer'}}
+                style={{
+                  cursor: 'pointer',
+                  width: '100%',
+                  height: '200px',
+                  objectFit: 'cover',
+                }}
               />
               <div
                 className="card-body"

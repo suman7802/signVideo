@@ -37,7 +37,12 @@ export default function FeaturedCourses() {
                   className={`card-img-top ${
                     isCoursePresent ? '' : 'grayscale'
                   }`}
-                  style={{cursor: 'pointer'}}
+                  style={{
+                    cursor: 'pointer',
+                    width: '100%',
+                    height: '200px',
+                    objectFit: 'cover',
+                  }}
                 />
                 {!isCoursePresent && (
                   <div className="overlay">
