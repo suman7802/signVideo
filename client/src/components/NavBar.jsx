@@ -1,24 +1,26 @@
-import {
-  Navbar,
-  Nav,
-  NavDropdown,
-  Form,
-  FormControl,
-  Button,
-} from 'react-bootstrap';
+import {useContext} from 'react';
 import {NavLink} from 'react-router-dom';
 import CartLogo from '../assets/cart.svg';
+import {useLocation} from 'react-router-dom';
 import {ShopContext} from '../contexts/Shop.context';
-import {useContext} from 'react';
+import {FeaturedCoursesContext} from '../contexts/FeaturedCourses.context';
+import {Navbar, Nav, NavDropdown, Form, FormControl} from 'react-bootstrap';
 
 export default function NavBar() {
+  const location = useLocation();
   const context = useContext(ShopContext);
+  const featuredContext = useContext(FeaturedCoursesContext);
 
   if (context === undefined) {
     throw new Error('useAuth must be used within a AuthProvider');
   }
 
+  if (featuredContext === undefined) {
+    throw new Error('useAuth must be used within a AuthProvider');
+  }
+
   const {coursesToBuy} = context;
+  const {search} = featuredContext;
 
   return (
     <Navbar
@@ -55,14 +57,16 @@ export default function NavBar() {
           </Nav.Link>
         </Nav>
         <div className="d-flex">
-          <Form inline="true" className="d-flex">
-            <FormControl type="text" placeholder="Search" className="mr-sm-2" />
-            <Button
-              variant="outline-success"
-              style={{marginRight: '10px', marginLeft: '10px'}}>
-              Search
-            </Button>
-          </Form>
+          {location.pathname === '/' && (
+            <Form inline="true" className="d-flex">
+              <FormControl
+                type="text"
+                placeholder="Search"
+                className="mr-sm-2"
+                onChange={(e) => search(e.target.value)}
+              />
+            </Form>
+          )}
           <Nav className="ml-auto">
             <Nav.Link as={NavLink} to="/cart">
               <img

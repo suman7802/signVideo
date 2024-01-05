@@ -1,7 +1,6 @@
 import axios from 'axios';
 import PropTypes from 'prop-types';
-import {createContext, useContext} from 'react';
-import {useEffect, useState} from 'react';
+import {createContext, useContext, useEffect, useRef, useState} from 'react';
 import AllowedCourse from '../utils/AllowedCourse';
 import {AuthContext} from './Auth.context';
 
@@ -11,6 +10,7 @@ const FeaturedCoursesContext = createContext();
 function FeaturedCoursesProvider({children}) {
   const context = useContext(AuthContext);
   const [featuredCourses, setFeaturedCourses] = useState([]);
+  const originalCourses = useRef([]);
 
   if (context === undefined) {
     throw new Error('useAuth must be used within a AuthProvider');
@@ -21,6 +21,7 @@ function FeaturedCoursesProvider({children}) {
     const fetchData = async () => {
       try {
         const {data} = await axios.get(`${url}/course/getThumbnail`);
+        originalCourses.current = data;
         setFeaturedCourses(data);
       } catch (error) {
         console.error(error);
@@ -50,9 +51,20 @@ function FeaturedCoursesProvider({children}) {
     }
   };
 
+  const search = (searchTerm) => {
+    if (searchTerm) {
+      const filteredCourses = originalCourses.current.filter((course) =>
+        course.title.toLowerCase().includes(searchTerm.toLowerCase())
+      );
+      setFeaturedCourses(filteredCourses);
+    } else {
+      setFeaturedCourses(originalCourses.current);
+    }
+  };
+
   return (
     <FeaturedCoursesContext.Provider
-      value={{featuredCourses, handleFeaturedCourseClick}}>
+      value={{featuredCourses, handleFeaturedCourseClick, search}}>
       {children}
     </FeaturedCoursesContext.Provider>
   );

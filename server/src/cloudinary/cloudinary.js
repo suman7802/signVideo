@@ -27,5 +27,6 @@ export async function generateSecureUrl(publicId) {
     type: 'upload',
     resource_type: 'video',
     expires_at: Math.floor(Date.now() / 1000) + 60 * 35, // 35 minutes
+    attachment: false
   });
 }

@@ -19,10 +19,10 @@ export default function App() {
   return (
     <BrowserRouter>
       <AuthProvider>
-        <ShopContextProvider>
-          <NavBar />
-          <ClassCoursesProvider>
-            <FeaturedCoursesProvider>
+        <FeaturedCoursesProvider>
+          <ShopContextProvider>
+            <ClassCoursesProvider>
+              <NavBar />
               <UploadProvider>
                 <Routes>
                   <Route index element={<FeaturedCourses />} />
@@ -36,9 +36,9 @@ export default function App() {
                   <Route path="/logout" element={<Logout />} />
                 </Routes>
               </UploadProvider>
-            </FeaturedCoursesProvider>
-          </ClassCoursesProvider>
-        </ShopContextProvider>
+            </ClassCoursesProvider>
+          </ShopContextProvider>
+        </FeaturedCoursesProvider>
       </AuthProvider>
     </BrowserRouter>
   );
