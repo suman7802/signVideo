@@ -70,9 +70,11 @@ export default function NavBar() {
                 <img
                   src={CartLogo}
                   alt="Cart"
-                  style={{width: '30px', marginRight: '10px'}}
+                  style={{width: '20px', marginRight: '10px'}}
                 />
-                {coursesToBuy.length > 0 && coursesToBuy.length} Cart
+                <span style={{color: coursesToBuy.length > 0 && 'red'}}>
+                  {coursesToBuy.length > 0 && coursesToBuy.length} Cart
+                </span>
               </Nav.Link>
             </Nav>
           )}

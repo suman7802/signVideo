@@ -9,6 +9,7 @@ const ShopContext = createContext();
 function ShopContextProvider({children}) {
   const context = useContext(AuthContext);
   const [coursesToBuy, setCoursesToBuy] = useState([]);
+  const [loading, setLoading] = useState(false);
 
   if (context === undefined) {
     throw new Error(
@@ -19,6 +20,7 @@ function ShopContextProvider({children}) {
   const {dispatch, saveToLocalStorage} = context;
 
   const checkout = async () => {
+    setLoading(true);
     try {
       const response = await axios.post(
         `${url}/course/buy`,
@@ -32,11 +34,14 @@ function ShopContextProvider({children}) {
           payload: response.data.courses,
         });
         saveToLocalStorage(true, response.data.role, response.data.courses);
+        alert('Checkout successful');
       }
-      setCoursesToBuy([]);
     } catch (error) {
       console.error('Checkout failed', error);
       alert('Checkout failed');
+    } finally {
+      setLoading(false);
+      setCoursesToBuy([]);
     }
   };
 
@@ -55,7 +60,7 @@ function ShopContextProvider({children}) {
   };
 
   return (
-    <ShopContext.Provider value={{coursesToBuy, addToCart, checkout}}>
+    <ShopContext.Provider value={{coursesToBuy, loading, addToCart, checkout}}>
       {children}
     </ShopContext.Provider>
   );

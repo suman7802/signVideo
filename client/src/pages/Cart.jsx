@@ -6,12 +6,18 @@ export default function Cart() {
   if (Shop === undefined) {
     throw new Error('useShop must be used within a ShopProvider');
   }
-  const {coursesToBuy, checkout} = Shop;
+  const {coursesToBuy, loading, checkout} = Shop;
 
   return (
     <div className="container mt-5">
       <h2>Cart</h2>
-      {coursesToBuy.length > 0 ? (
+      {loading ? (
+        <div className="d-flex justify-content-center">
+          <div className="spinner-border" role="status">
+            <span className="sr-only"></span>
+          </div>
+        </div>
+      ) : coursesToBuy.length > 0 ? (
         <ul className="list-group">
           {coursesToBuy.map((item, index) => (
             <li key={index} className="list-group-item">
