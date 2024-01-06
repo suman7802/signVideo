@@ -1,5 +1,5 @@
 import {AuthContext} from '../contexts/Auth.context';
-import {Form, Button, Container, Row, Col} from 'react-bootstrap';
+import {Form, Button, Container, Row, Col, Spinner} from 'react-bootstrap';
 import {useContext} from 'react';
 
 export default function Login() {
@@ -9,7 +9,15 @@ export default function Login() {
     throw new Error('useAuth must be used within a AuthProvider');
   }
 
-  const {email, admin, showPassword, adminPassword, reqOtp, dispatch} = context;
+  const {
+    email,
+    admin,
+    reqOtp,
+    dispatch,
+    sendingOTP,
+    showPassword,
+    adminPassword,
+  } = context;
 
   return (
     <Container className="mt-5">
@@ -65,8 +73,18 @@ export default function Login() {
               </>
             )}
 
-            <Button variant="primary" type="submit">
-              Send OTP
+            <Button
+              variant="primary"
+              type="submit"
+              onClick={() => {
+                if (email) {
+                  dispatch({type: 'SET_SENDING_OTP', payload: true});
+                } else {
+                  alert('Please enter your email');
+                }
+              }}>
+              Send OTP {'  '}
+              {sendingOTP && <Spinner animation="border" size="sm" />}
             </Button>
           </Form>
         </Col>

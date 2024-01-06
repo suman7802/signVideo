@@ -16,6 +16,7 @@ const initialState = {
   adminPassword: '',
   showPassword: false,
   isAuthenticated: false,
+  sendingOTP: false,
 };
 
 function reducer(state, action) {
@@ -29,6 +30,8 @@ function reducer(state, action) {
       };
     case 'SET_ADMIN':
       return {...state, admin: !state.admin};
+    case 'SET_SENDING_OTP':
+      return {...state, sendingOTP: action.payload};
     case 'UPDATE_COURSES':
       return {...state, courses: action.payload};
     case 'SET_OTP':
@@ -53,6 +56,7 @@ function AuthProvider({children}) {
       email,
       admin,
       courses,
+      sendingOTP,
       showPassword,
       adminPassword,
       isAuthenticated,
@@ -94,19 +98,16 @@ function AuthProvider({children}) {
     }
   };
 
-  // todo: fix logout
   const handleLogout = () => {
-    console.log('logout');
-    console.log(document);
-    console.log(decodeURIComponent(document.cookie));
     document.cookie =
       'signVideo=; expires=Thu, 01 Jan 1970 00:00:01 UTC; path=/';
-    // localStorage.clear();
-    // navigate('/login');
+    localStorage.clear();
+    navigate('/login');
   };
 
   const reqOtp = async (event) => {
     event.preventDefault();
+
     try {
       const res = await Axios.post(
         `${url}/user/reqotp`,
@@ -165,6 +166,7 @@ function AuthProvider({children}) {
         email,
         admin,
         courses,
+        sendingOTP,
         showPassword,
         adminPassword,
         isAuthenticated,
