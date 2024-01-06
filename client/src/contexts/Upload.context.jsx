@@ -73,6 +73,7 @@ function UploadProvider({children}) {
         withCredentials: true,
       });
       if (res.status === 200) {
+        dispatch({type: 'reset'});
         alert('Upload success');
       }
     } catch (error) {
