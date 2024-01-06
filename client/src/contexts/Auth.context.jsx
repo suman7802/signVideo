@@ -96,7 +96,11 @@ function AuthProvider({children}) {
 
   // todo: fix logout
   const handleLogout = () => {
-    document.cookie = 'signVideo=;expires=Thu, 01 Jan 1970 00:00:01 GMT;';
+    console.log('logout');
+    console.log(document);
+    console.log(decodeURIComponent(document.cookie));
+    document.cookie =
+      'signVideo=; expires=Thu, 01 Jan 1970 00:00:01 UTC; path=/';
     // localStorage.clear();
     // navigate('/login');
   };
