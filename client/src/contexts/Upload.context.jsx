@@ -11,18 +11,21 @@ const initialState = {
   category: '',
   course: null,
   thumbnail: null,
+  uploading: false,
 };
 
 function reducer(state, action) {
   switch (action.type) {
     case 'title':
-      return {...state, title: action.value};
+      return {...state, title: action.payload};
     case 'category':
-      return {...state, category: action.value};
+      return {...state, category: action.payload};
     case 'course':
-      return {...state, course: action.value};
+      return {...state, course: action.payload};
     case 'thumbnail':
-      return {...state, thumbnail: action.value};
+      return {...state, thumbnail: action.payload};
+    case 'uploading':
+      return {...state, uploading: action.payload};
     case 'reset':
       return initialState;
     default:
@@ -31,36 +34,36 @@ function reducer(state, action) {
 }
 
 function UploadProvider({children}) {
-  const [state, dispatch] = useReducer(reducer, initialState);
-
-  const {title, category, course, thumbnail} = state;
+  const [{title, category, course, thumbnail, uploading}, dispatch] =
+    useReducer(reducer, initialState);
 
   const handleTitleChange = (event) => {
-    dispatch({type: 'title', value: event.target.value});
+    dispatch({type: 'title', payload: event.target.value});
   };
 
   const handleCategoryChange = (event) => {
-    dispatch({type: 'category', value: event.target.value});
+    dispatch({type: 'category', payload: event.target.value});
   };
 
   const handleCourseChange = (e) => {
-    dispatch({type: 'course', value: e.target.files[0]});
+    dispatch({type: 'course', payload: e.target.files[0]});
   };
 
   const handleThumbnailChange = (e) => {
-    dispatch({type: 'thumbnail', value: e.target.files[0]});
+    dispatch({type: 'thumbnail', payload: e.target.files[0]});
   };
 
   const handleSubmit = async (e) => {
+    dispatch({type: 'uploading', payload: true});
     e.preventDefault();
-
     const formData = new FormData();
-
     formData.append('title', title);
     formData.append('category', category);
+
     if (course) {
       formData.append('course', course);
     }
+
     if (thumbnail) {
       formData.append('thumbnail', thumbnail);
     }
@@ -72,9 +75,10 @@ function UploadProvider({children}) {
       console.log(res);
     } catch (error) {
       console.error(error);
+      alert('Upload failed');
+    } finally {
+      dispatch({type: 'reset'});
     }
-
-    dispatch({type: 'reset'});
   };
 
   return (
@@ -84,6 +88,7 @@ function UploadProvider({children}) {
         category,
         course,
         thumbnail,
+        uploading,
         handleTitleChange,
         handleCategoryChange,
         handleCourseChange,

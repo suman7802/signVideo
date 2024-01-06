@@ -47,6 +47,7 @@ function FeaturedCoursesProvider({children}) {
         dispatch({type: 'FETCH_SUCCESS', payload: data});
       } catch (error) {
         console.error(error);
+        alert('Error in fetching the Courses');
       }
     };
     fetchData();
@@ -56,6 +57,7 @@ function FeaturedCoursesProvider({children}) {
     const ownedCourse = AllowedCourse(public_id, courses);
 
     if (!ownedCourse) {
+      alert("you don't have access to this course");
       return console.error("you don't have access to this course");
     }
 
@@ -70,6 +72,7 @@ function FeaturedCoursesProvider({children}) {
       }
     } catch (error) {
       console.error(error);
+      alert('Error Playing the video');
     }
   };
 

@@ -21,7 +21,11 @@ export default function FeaturedCourses() {
     <div className="container mt-5">
       <h2 className="mb-4">Featured courses</h2>
       {isLoading ? (
-        <h1>Loading...</h1>
+        <div className="d-flex justify-content-center">
+          <div className="spinner-border" role="status">
+            <span className="sr-only"></span>
+          </div>
+        </div>
       ) : (
         <div className="row">
           {featuredCourses.map((course) => {

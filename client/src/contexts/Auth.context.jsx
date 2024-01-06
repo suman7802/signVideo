@@ -16,7 +16,7 @@ const initialState = {
   adminPassword: '',
   showPassword: false,
   isAuthenticated: false,
-  sendingOTP: false,
+  loading: false,
 };
 
 function reducer(state, action) {
@@ -30,8 +30,8 @@ function reducer(state, action) {
       };
     case 'SET_ADMIN':
       return {...state, admin: !state.admin};
-    case 'SET_SENDING_OTP':
-      return {...state, sendingOTP: action.payload};
+    case 'SET_LOADING':
+      return {...state, loading: action.payload};
     case 'UPDATE_COURSES':
       return {...state, courses: action.payload};
     case 'SET_OTP':
@@ -56,7 +56,7 @@ function AuthProvider({children}) {
       email,
       admin,
       courses,
-      sendingOTP,
+      loading,
       showPassword,
       adminPassword,
       isAuthenticated,
@@ -108,6 +108,12 @@ function AuthProvider({children}) {
   const reqOtp = async (event) => {
     event.preventDefault();
 
+    if (email) {
+      dispatch({type: 'SET_LOADING', payload: true});
+    } else {
+      alert('Please enter your email');
+    }
+
     try {
       const res = await Axios.post(
         `${url}/user/reqotp`,
@@ -122,10 +128,18 @@ function AuthProvider({children}) {
       }
     } catch (error) {
       console.error('Login failed:', error.message);
+      alert('Login failed');
+    } finally {
+      dispatch({type: 'SET_LOADING', payload: false});
     }
   };
 
   const submitOtp = async (event) => {
+    if (otp) {
+      dispatch({type: 'SET_LOADING', payload: true});
+    } else {
+      alert('Please enter your OTP');
+    }
     event.preventDefault();
     try {
       const res = await Axios.post(
@@ -149,12 +163,14 @@ function AuthProvider({children}) {
             courses: res.data.user.courses,
           },
         });
-
         saveToLocalStorage(Authenticated, Role, Courses);
         navigate('/library');
       }
     } catch (error) {
       console.error('Login failed:', error.message);
+      alert('Login failed');
+    } finally {
+      dispatch({type: 'SET_LOADING', payload: false});
     }
   };
 
@@ -166,7 +182,7 @@ function AuthProvider({children}) {
         email,
         admin,
         courses,
-        sendingOTP,
+        loading,
         showPassword,
         adminPassword,
         isAuthenticated,

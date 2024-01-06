@@ -26,7 +26,7 @@ export default function Shop() {
 
   const {courses} = Auth;
 
-  const {featuredCourses} = FeaturedCourses;
+  const {featuredCourses, isLoading} = FeaturedCourses;
 
   const unsubscribedCourses = featuredCourses.filter(
     (featuredCourse) =>
@@ -36,27 +36,35 @@ export default function Shop() {
   return (
     <Container>
       <h2>Shop Course</h2>
-      <Form>
-        <Row>
-          {unsubscribedCourses.length > 0 ? (
-            unsubscribedCourses.map((course) => (
-              <ShopItem key={course._id} course={course} />
-            ))
-          ) : (
-            <div
-              style={{
-                display: 'flex',
-                justifyContent: 'center',
-                alignItems: 'center',
-                height: '50vh',
-                fontSize: '1.5em',
-                color: '#333',
-              }}>
-              You have all courses subscribed.
-            </div>
-          )}
-        </Row>
-      </Form>
+      {isLoading ? (
+        <div className="d-flex justify-content-center">
+          <div className="spinner-border" role="status">
+            <span className="sr-only"></span>
+          </div>
+        </div>
+      ) : (
+        <Form>
+          <Row>
+            {unsubscribedCourses.length > 0 ? (
+              unsubscribedCourses.map((course) => (
+                <ShopItem key={course._id} course={course} />
+              ))
+            ) : (
+              <div
+                style={{
+                  display: 'flex',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  height: '50vh',
+                  fontSize: '1.5em',
+                  color: '#333',
+                }}>
+                You have all courses subscribed.
+              </div>
+            )}
+          </Row>
+        </Form>
+      )}
     </Container>
   );
 }

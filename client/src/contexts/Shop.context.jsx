@@ -33,10 +33,10 @@ function ShopContextProvider({children}) {
         });
         saveToLocalStorage(true, response.data.role, response.data.courses);
       }
-
       setCoursesToBuy([]);
     } catch (error) {
       console.error('Checkout failed', error);
+      alert('Checkout failed');
     }
   };
 

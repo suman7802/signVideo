@@ -1,6 +1,6 @@
 import {useContext} from 'react';
 import {AuthContext} from '../contexts/Auth.context';
-import {Form, Button, Container, Row, Col} from 'react-bootstrap';
+import {Form, Button, Container, Row, Col, Spinner} from 'react-bootstrap';
 
 export default function OTP() {
   const context = useContext(AuthContext);
@@ -9,7 +9,7 @@ export default function OTP() {
     throw new Error('useAuth must be used within a AuthProvider');
   }
 
-  const {email, otp, submitOtp, dispatch} = context;
+  const {email, otp, submitOtp, dispatch, loading} = context;
 
   return (
     <Container className="mt-5">
@@ -40,7 +40,8 @@ export default function OTP() {
               />
             </Form.Group>
             <Button variant="primary" type="submit">
-              Login
+              Login {'  '}
+              {loading && <Spinner animation="border" size="sm" />}
             </Button>
           </Form>
         </Col>

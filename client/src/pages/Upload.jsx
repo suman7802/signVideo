@@ -1,20 +1,22 @@
 import {useContext} from 'react';
 import {UploadContext} from '../contexts/Upload.context';
+import {Spinner} from 'react-bootstrap';
 
 export default function UploadForm() {
   const context = useContext(UploadContext);
   if (context === undefined) {
     throw new Error('useUpload must be used within a UploadProvider');
   }
-  
+
   const {
     title,
     category,
-    handleTitleChange,
-    handleCategoryChange,
-    handleCourseChange,
-    handleThumbnailChange,
+    uploading,
     handleSubmit,
+    handleTitleChange,
+    handleCourseChange,
+    handleCategoryChange,
+    handleThumbnailChange,
   } = context;
 
   return (
@@ -72,7 +74,8 @@ export default function UploadForm() {
               />
             </div>
             <button type="submit" className="btn btn-primary">
-              Submit
+              Submit {'  '}
+              {uploading && <Spinner animation="border" size="sm" />}
             </button>
           </form>
         </div>

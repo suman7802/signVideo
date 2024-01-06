@@ -9,15 +9,8 @@ export default function Login() {
     throw new Error('useAuth must be used within a AuthProvider');
   }
 
-  const {
-    email,
-    admin,
-    reqOtp,
-    dispatch,
-    sendingOTP,
-    showPassword,
-    adminPassword,
-  } = context;
+  const {email, admin, reqOtp, dispatch, loading, showPassword, adminPassword} =
+    context;
 
   return (
     <Container className="mt-5">
@@ -31,7 +24,7 @@ export default function Login() {
                 placeholder="Email"
                 value={email}
                 onChange={(e) =>
-                  dispatch({type: 'SET_EMAIL', payload: e.target.value})
+                  dispatch({type: 'SET_EMAIL', payload: String(e.target.value)})
                 }
                 required
               />
@@ -73,18 +66,9 @@ export default function Login() {
               </>
             )}
 
-            <Button
-              variant="primary"
-              type="submit"
-              onClick={() => {
-                if (email) {
-                  dispatch({type: 'SET_SENDING_OTP', payload: true});
-                } else {
-                  alert('Please enter your email');
-                }
-              }}>
+            <Button variant="primary" type="submit">
               Send OTP {'  '}
-              {sendingOTP && <Spinner animation="border" size="sm" />}
+              {loading && <Spinner animation="border" size="sm" />}
             </Button>
           </Form>
         </Col>

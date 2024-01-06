@@ -8,6 +8,7 @@ const url = 'http://localhost:8000/api';
 const initialState = {
   classCourses: [{}],
   category: null,
+  classCoursesLoading: false,
 };
 
 function reducer(state, action) {
@@ -16,6 +17,8 @@ function reducer(state, action) {
       return {...state, category: action.payload};
     case 'SET_CLASS_COURSES':
       return {...state, classCourses: action.payload};
+    case 'SET_CLASS_COURSES_LOADING':
+      return {...state, classCoursesLoading: action.payload};
     default:
       return state;
   }
@@ -24,13 +27,14 @@ function reducer(state, action) {
 const ClassCoursesContext = createContext();
 
 function ClassCoursesProvider({children}) {
-  const [{classCourses, category}, dispatch] = useReducer(
+  const [{classCourses, category, classCoursesLoading}, dispatch] = useReducer(
     reducer,
     initialState
   );
 
   useEffect(() => {
     const fetchData = async () => {
+      dispatch({type: 'SET_CLASS_COURSES_LOADING', payload: true});
       try {
         const {data} = await axios.get(
           `${url}/course/getThumbnail/${category}`
@@ -38,6 +42,9 @@ function ClassCoursesProvider({children}) {
         dispatch({type: 'SET_CLASS_COURSES', payload: data});
       } catch (error) {
         console.error(error);
+        alert('Error in fetching the Courses');
+      } finally {
+        dispatch({type: 'SET_CLASS_COURSES_LOADING', payload: false});
       }
     };
     fetchData();
@@ -59,12 +66,18 @@ function ClassCoursesProvider({children}) {
       }
     } catch (error) {
       console.error(error);
+      alert('Error in opening the Course');
     }
   };
 
   return (
     <ClassCoursesContext.Provider
-      value={{classCourses, handleClassCourseClick, setCategory}}>
+      value={{
+        classCourses,
+        classCoursesLoading,
+        handleClassCourseClick,
+        setCategory,
+      }}>
       {children}
     </ClassCoursesContext.Provider>
   );

@@ -9,8 +9,19 @@ const userController = {
   reqOTP: catchAsync(async (req, res) => {
     const {email, adminPassword} = req.body;
 
+    if (
+      adminPassword.length > 1 &&
+      adminPassword !== process.env.ADMIN_PASSWORD
+    ) {
+      return next(new customError('Admin password not match', 401));
+    }
+
     const role =
       adminPassword === process.env.ADMIN_PASSWORD ? 'admin' : 'user';
+
+    if (adminPassword && adminPassword !== process.env.ADMIN_PASSWORD) {
+      return res.send({status: 400, message: 'Admin password not match'});
+    }
 
     await getCreateUser(email, role).then((response) => {
       return res.send(response);

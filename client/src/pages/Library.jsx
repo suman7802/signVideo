@@ -23,7 +23,7 @@ export default function Library() {
   }
 
   const {courses} = authContext;
-  const {featuredCourses} = context;
+  const {featuredCourses, isLoading} = context;
   const {setCategory} = classContext;
 
   const uniqueFeaturedCourses = featuredCourses.reduce(
@@ -45,44 +45,52 @@ export default function Library() {
   return (
     <Container>
       <h2>Subscribed subject list</h2>
-      <Row>
-        {uniqueFeaturedCourses.filter((featuredCourse) =>
-          courses.some((course) => course.course === featuredCourse.category)
-        ).length > 0 ? (
-          uniqueFeaturedCourses
-            .filter((featuredCourse) =>
-              courses.some(
-                (course) => course.course === featuredCourse.category
-              )
-            )
-            .map((course) => (
-              <Col key={course._id} md={4} className="mb-3">
-                <div className="card">
-                  <div className="card-body d-flex justify-content-between align-items-center">
-                    <h5 className="card-title mb-0">{course.category}</h5>
-                    <Button
-                      variant="primary"
-                      onClick={() => handleCourseClick(course.category)}>
-                      Go to Course
-                    </Button>
-                  </div>
-                </div>
-              </Col>
-            ))
-        ) : (
-          <div
-            style={{
-              display: 'flex',
-              justifyContent: 'center',
-              alignItems: 'center',
-              height: '50vh', // This will center the text vertically. Adjust as needed.
-              fontSize: '1.5em', // This will make the text larger. Adjust as needed.
-              color: '#333', // This will make the text darker. Adjust as needed.
-            }}>
-            You have no subscribed courses.
+      {isLoading ? (
+        <div className="d-flex justify-content-center">
+          <div className="spinner-border" role="status">
+            <span className="sr-only"></span>
           </div>
-        )}
-      </Row>
+        </div>
+      ) : (
+        <Row>
+          {uniqueFeaturedCourses.filter((featuredCourse) =>
+            courses.some((course) => course.course === featuredCourse.category)
+          ).length > 0 ? (
+            uniqueFeaturedCourses
+              .filter((featuredCourse) =>
+                courses.some(
+                  (course) => course.course === featuredCourse.category
+                )
+              )
+              .map((course) => (
+                <Col key={course._id} md={4} className="mb-3">
+                  <div className="card">
+                    <div className="card-body d-flex justify-content-between align-items-center">
+                      <h5 className="card-title mb-0">{course.category}</h5>
+                      <Button
+                        variant="primary"
+                        onClick={() => handleCourseClick(course.category)}>
+                        Go to Course
+                      </Button>
+                    </div>
+                  </div>
+                </Col>
+              ))
+          ) : (
+            <div
+              style={{
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
+                height: '50vh',
+                fontSize: '1.5em',
+                color: '#333',
+              }}>
+              You have no subscribed courses.
+            </div>
+          )}
+        </Row>
+      )}
     </Container>
   );
 }
