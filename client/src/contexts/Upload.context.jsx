@@ -72,7 +72,9 @@ function UploadProvider({children}) {
       const res = await axios.post(`${url}/course/upload`, formData, {
         withCredentials: true,
       });
-      console.log(res);
+      if (res.status === 200) {
+        alert('Upload success');
+      }
     } catch (error) {
       console.error(error);
       alert('Upload failed');
