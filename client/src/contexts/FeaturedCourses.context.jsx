@@ -1,15 +1,36 @@
 import axios from 'axios';
 import PropTypes from 'prop-types';
-import {createContext, useContext, useEffect, useRef, useState} from 'react';
+import {createContext, useContext, useEffect, useReducer, useRef} from 'react';
 import AllowedCourse from '../utils/AllowedCourse';
 import {AuthContext} from './Auth.context';
 
 const url = 'http://localhost:8000/api';
 const FeaturedCoursesContext = createContext();
 
+const initialState = {
+  featuredCourses: [],
+  isLoading: false,
+};
+
+function reducer(state, action) {
+  switch (action.type) {
+    case 'FETCH_START':
+      return {...state, isLoading: true};
+    case 'FETCH_SUCCESS':
+      return {...state, featuredCourses: action.payload, isLoading: false};
+    case 'SEARCH':
+      return {...state, featuredCourses: action.payload};
+    default:
+      throw new Error(`Unknown action: ${action.type}`);
+  }
+}
+
 function FeaturedCoursesProvider({children}) {
   const context = useContext(AuthContext);
-  const [featuredCourses, setFeaturedCourses] = useState([]);
+  const [{featuredCourses, isLoading}, dispatch] = useReducer(
+    reducer,
+    initialState
+  );
   const originalCourses = useRef([]);
 
   if (context === undefined) {
@@ -19,10 +40,11 @@ function FeaturedCoursesProvider({children}) {
 
   useEffect(() => {
     const fetchData = async () => {
+      dispatch({type: 'FETCH_START'});
       try {
         const {data} = await axios.get(`${url}/course/getThumbnail`);
         originalCourses.current = data;
-        setFeaturedCourses(data);
+        dispatch({type: 'FETCH_SUCCESS', payload: data});
       } catch (error) {
         console.error(error);
       }
@@ -56,15 +78,15 @@ function FeaturedCoursesProvider({children}) {
       const filteredCourses = originalCourses.current.filter((course) =>
         course.title.toLowerCase().includes(searchTerm.toLowerCase())
       );
-      setFeaturedCourses(filteredCourses);
+      dispatch({type: 'SEARCH', payload: filteredCourses});
     } else {
-      setFeaturedCourses(originalCourses.current);
+      dispatch({type: 'SEARCH', payload: originalCourses.current});
     }
   };
 
   return (
     <FeaturedCoursesContext.Provider
-      value={{featuredCourses, handleFeaturedCourseClick, search}}>
+      value={{isLoading, featuredCourses, handleFeaturedCourseClick, search}}>
       {children}
     </FeaturedCoursesContext.Provider>
   );
