@@ -29,6 +29,7 @@ function ShopContextProvider({children}) {
       );
 
       if (response.status === 200) {
+        setLoading(false);
         dispatch({
           type: 'UPDATE_COURSES',
           payload: response.data.courses,
