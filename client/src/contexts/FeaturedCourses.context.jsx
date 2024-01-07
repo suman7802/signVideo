@@ -5,6 +5,7 @@ import {AuthContext} from './Auth.context';
 import AllowedCourse from '../utils/AllowedCourse';
 import {createContext, useContext, useEffect, useReducer, useRef} from 'react';
 
+const toastId = 'serverError';
 const url = 'http://localhost:8000/api';
 const FeaturedCoursesContext = createContext();
 
@@ -48,7 +49,11 @@ function FeaturedCoursesProvider({children}) {
         dispatch({type: 'FETCH_SUCCESS', payload: data});
       } catch (error) {
         console.error(error);
-        toast.error("Oops! Can't get the course Thumbnail right now.");
+        if (!toast.isActive(toastId)) {
+          toast.error("Oops! Can't get the course right now.", {
+            toastId,
+          });
+        }
       }
     };
     fetchData();

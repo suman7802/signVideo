@@ -38,7 +38,7 @@ export default function App() {
                   <Route path="/logout" element={<Logout />} />
                 </Routes>
               </UploadProvider>
-              <ToastContainer />
+              <ToastContainer position="bottom-right" />
             </ClassCoursesProvider>
           </ShopContextProvider>
         </FeaturedCoursesProvider>

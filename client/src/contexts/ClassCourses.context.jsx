@@ -4,6 +4,7 @@ import {createContext} from 'react';
 import {toast} from 'react-toastify';
 import {useEffect, useReducer} from 'react';
 
+const toastId = 'serverError';
 const url = 'http://localhost:8000/api';
 
 const initialState = {
@@ -43,7 +44,11 @@ function ClassCoursesProvider({children}) {
         dispatch({type: 'SET_CLASS_COURSES', payload: data});
       } catch (error) {
         console.error(error);
-        toast.error("Oops! Can't get the course Thumbnail right now.");
+        if (!toast.isActive(toastId)) {
+          toast.error("Oops! Can't get the course right now.", {
+            toastId,
+          });
+        }
       } finally {
         dispatch({type: 'SET_CLASS_COURSES_LOADING', payload: false});
       }
