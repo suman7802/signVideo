@@ -126,7 +126,7 @@ function AuthProvider({children}) {
       );
       if (res.status === 200) {
         navigate('/otp');
-        toast.success('OTP sent');
+        toast.success('OTP sent to your Email Address');
       }
     } catch (error) {
       console.error('Login failed:', error.message);
@@ -142,7 +142,7 @@ function AuthProvider({children}) {
     if (otp && email) {
       dispatch({type: 'SET_LOADING', payload: true});
     } else {
-      toast.error('Please enter your OTP');
+      toast.error('Please enter your Email & OTP');
     }
 
     try {

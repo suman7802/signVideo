@@ -67,13 +67,13 @@ function UploadProvider({children}) {
     }
 
     if (!course) {
-      return toast.error('Please upload a course video');
+      return toast.error('Please Add a course Video');
     } else if (!course.type.startsWith('video/')) {
       return toast.error('Course file must be a video');
     }
 
     if (!thumbnail) {
-      return toast.error('Please upload a thumbnail image');
+      return toast.error('Please Add a thumbnail image');
     } else if (!thumbnail.type.startsWith('image/')) {
       return toast.error('Thumbnail file must be an image');
     }

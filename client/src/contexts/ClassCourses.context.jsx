@@ -43,7 +43,7 @@ function ClassCoursesProvider({children}) {
         dispatch({type: 'SET_CLASS_COURSES', payload: data});
       } catch (error) {
         console.error(error);
-        toast.error('Error fetch courses Thumbnail');
+        toast.error("Oops! Can't get the course Thumbnail right now.");
       } finally {
         dispatch({type: 'SET_CLASS_COURSES_LOADING', payload: false});
       }
@@ -67,7 +67,7 @@ function ClassCoursesProvider({children}) {
       }
     } catch (error) {
       console.error(error);
-      toast.error('Error in opening the Course');
+      toast.error('Error, Unable to open Course');
     }
   };
 

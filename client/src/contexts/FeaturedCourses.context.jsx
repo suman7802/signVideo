@@ -48,7 +48,7 @@ function FeaturedCoursesProvider({children}) {
         dispatch({type: 'FETCH_SUCCESS', payload: data});
       } catch (error) {
         console.error(error);
-        toast.error('Error in fetching the Courses Thumbnail');
+        toast.error("Oops! Can't get the course Thumbnail right now.");
       }
     };
     fetchData();
@@ -58,8 +58,8 @@ function FeaturedCoursesProvider({children}) {
     const ownedCourse = AllowedCourse(public_id, courses);
 
     if (!ownedCourse) {
-      toast.error("you don't have access to this course");
-      return console.error("you don't have access to this course");
+      toast.error("Can't access this course.");
+      return console.error("you don't have access of this course");
     }
 
     try {
