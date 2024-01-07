@@ -43,6 +43,8 @@ function reducer(state, action) {
       return {...state, adminPassword: action.payload};
     case 'SET_SHOW_PASSWORD':
       return {...state, showPassword: !state.showPassword};
+    case 'RESET':
+      return initialState;
     default:
       throw new Error();
   }
@@ -104,6 +106,8 @@ function AuthProvider({children}) {
       'signVideo=; expires=Thu, 01 Jan 1970 00:00:01 UTC; path=/';
     localStorage.clear();
     navigate('/login');
+    dispatch({type: 'RESET'});
+    toast.success('Logout success');
   };
 
   const reqOtp = async (event) => {
