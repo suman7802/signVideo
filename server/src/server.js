@@ -3,6 +3,8 @@ import dotenv from 'dotenv';
 import helmet from 'helmet';
 import morgan from 'morgan';
 import express from 'express';
+import {fileURLToPath} from 'url';
+import path, {dirname} from 'path';
 import connectDB from './models/db.js';
 import cookieParser from 'cookie-parser';
 import cleanDir from './utils/clearTemp.js';
@@ -12,10 +14,11 @@ import streamRoute from './routes/streamRoute.js';
 import courseRoute from './routes/courseRoute.js';
 import errorHandler from './controllers/errorHandler.js';
 
-const app = express();
-
 dotenv.config();
+const app = express();
 const {NODE_ENV, PORT} = process.env;
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
 
 const port = PORT || 8000;
 const isLocal = NODE_ENV === 'development';
@@ -40,6 +43,11 @@ app.use('/api/user', userRoute);
 app.use('/api/course', courseRoute);
 app.use('/api/stream', streamRoute);
 app.use(errorHandler);
+
+app.use(express.static(path.join(__dirname, '../../client/dist')));
+app.get('*', (req, res) => {
+  res.sendFile(path.resolve(__dirname, '../../client/dist/index.html'));
+});
 
 await connectDB();
 

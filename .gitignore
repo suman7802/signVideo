@@ -1,5 +1,6 @@
 node_modules
 .env
 server/tmp
-server/temp.js
+server/src/temp.js
+client/dist
 
