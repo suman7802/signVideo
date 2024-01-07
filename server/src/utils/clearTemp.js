@@ -6,6 +6,11 @@ const __dirname = path.dirname(__filename);
 const dirPath = path.join(__dirname, '../../tmp');
 
 export default function cleanDir() {
+  if (!fs.existsSync(dirPath)) {
+    console.log(`Directory does not exist: ${dirPath}`);
+    return;
+  }
+
   try {
     const files = fs.readdirSync(dirPath);
     for (const file of files) {
