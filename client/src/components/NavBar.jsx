@@ -1,4 +1,4 @@
-import {useContext} from 'react';
+import {useContext, useEffect} from 'react';
 import {NavLink} from 'react-router-dom';
 import CartLogo from '../assets/cart.svg';
 import {useLocation} from 'react-router-dom';
@@ -7,8 +7,32 @@ import {FeaturedCoursesContext} from '../contexts/FeaturedCourses.context';
 import {AuthContext} from '../contexts/Auth.context';
 import {Navbar, Nav, NavDropdown, Form, FormControl} from 'react-bootstrap';
 
+function getTitle(pathname) {
+  switch (pathname) {
+    case '/shop':
+      return 'Shop';
+    case '/login':
+      return 'Login';
+    case '/otp':
+      return 'OTP';
+    case '/library':
+      return 'Library';
+    case '/class':
+      return 'Class';
+    case '/cart':
+      return 'Cart';
+    case '/upload':
+      return 'Upload Course';
+    case '/logout':
+      return 'Logout';
+    default:
+      return 'SignVideo';
+  }
+}
+
 export default function NavBar() {
   const location = useLocation();
+
   const context = useContext(ShopContext);
   const authContext = useContext(AuthContext);
   const featuredContext = useContext(FeaturedCoursesContext);
@@ -26,6 +50,10 @@ export default function NavBar() {
   const {role} = authContext;
   const {coursesToBuy} = context;
   const {search} = featuredContext;
+
+  useEffect(() => {
+    document.title = getTitle(location.pathname);
+  }, [location.pathname]);
 
   return (
     <Navbar

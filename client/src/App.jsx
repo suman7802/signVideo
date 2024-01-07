@@ -27,16 +27,15 @@ export default function App() {
               <NavBar />
               <UploadProvider>
                 <Routes>
-                  <Route index element={<FeaturedCourses />} />
+                  <Route path="/otp" element={<OTP />} />
+                  <Route path="/cart" element={<Cart />} />
                   <Route path="/shop" element={<Shop />} />
                   <Route path="/login" element={<Login />} />
-                  <Route path="/otp" element={<OTP />} />
-                  <Route path="/library" element={<Library />} />
                   <Route path="/class" element={<Class />} />
-                  <Route path="/cart" element={<Cart />} />
-                  <Route path="/upload" element={<UploadForm />} />
-                  <Route path="/upload" element={<UploadForm />} />
                   <Route path="/logout" element={<Logout />} />
+                  <Route index element={<FeaturedCourses />} />
+                  <Route path="/library" element={<Library />} />
+                  <Route path="/upload" element={<UploadForm />} />
                 </Routes>
               </UploadProvider>
               <ToastContainer position="bottom-right" />

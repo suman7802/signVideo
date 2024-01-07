@@ -39,6 +39,7 @@ app.use(
     directives: {
       'img-src': ["'self'", 'https: data:'],
     },
+    permissionsPolicy: false,
   })
 );
 

@@ -4,7 +4,6 @@ import {toast} from 'react-toastify';
 import {AuthContext} from './Auth.context';
 import {createContext, useState, useContext} from 'react';
 
-const url = 'http://localhost:8000/api';
 const ShopContext = createContext();
 
 function ShopContextProvider({children}) {
@@ -18,7 +17,7 @@ function ShopContextProvider({children}) {
     );
   }
 
-  const {dispatch, saveToLocalStorage} = context;
+  const {dispatch, saveToLocalStorage, url} = context;
 
   const checkout = async () => {
     setLoading(true);
