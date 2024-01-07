@@ -1,7 +1,7 @@
 import dotenv from 'dotenv';
 import {v2 as cloudinary} from 'cloudinary';
 
-dotenv.config();
+dotenv.config({path: '../.env'});
 
 const {cloud_name, api_key, api_secret} = process.env;
 
@@ -27,6 +27,6 @@ export async function generateSecureUrl(publicId) {
     type: 'upload',
     resource_type: 'video',
     expires_at: Math.floor(Date.now() / 1000) + 60 * 35, // 35 minutes
-    attachment: false
+    attachment: false,
   });
 }

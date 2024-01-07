@@ -14,7 +14,8 @@ import streamRoute from './routes/streamRoute.js';
 import courseRoute from './routes/courseRoute.js';
 import errorHandler from './controllers/errorHandler.js';
 
-dotenv.config();
+dotenv.config({path: '../.env'});
+
 const app = express();
 const {NODE_ENV, PORT} = process.env;
 const __filename = fileURLToPath(import.meta.url);
