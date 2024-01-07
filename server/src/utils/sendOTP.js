@@ -53,10 +53,13 @@ const sendMailForOtp = (otp, email) => {
     text: `Your OTP is : ${otp}\nExpiring in 3 minute..`,
     to: email,
   };
+  
   return new Promise(async (resolve, reject) => {
     return await createTransporter().then((transporter) => {
       transporter.sendMail(emailConfig, (err, info) => {
-        if (err) return reject(err);
+        if (err) {
+          return reject(err);
+        }
         return resolve(info);
       });
     });

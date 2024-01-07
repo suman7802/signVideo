@@ -4,6 +4,7 @@ import Shop from './pages/Shop';
 import Class from './pages/Class';
 import Login from './pages/Login';
 import Logout from './pages/Logout';
+import Socket from './pages/Socket';
 import Library from './pages/Library';
 import UploadForm from './pages/Upload';
 import NavBar from './components/NavBar';
@@ -25,6 +26,7 @@ export default function App() {
           <ShopContextProvider>
             <ClassCoursesProvider>
               <NavBar />
+              <Socket />
               <UploadProvider>
                 <Routes>
                   <Route index element={<FeaturedCourses />} />
