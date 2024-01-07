@@ -6,8 +6,7 @@
   "scripts": {
     "install": "concurrently \"cd client && npm install\" \"cd server && npm install\"",
     "client_build": "cd client && npm run build",
-    
-    "build": "npm run install && npm run client_build",
+    "build": "npm i && npm run install && npm run client_build",
     "start": "cd server && npm run start"
   },
   "keywords": [],
