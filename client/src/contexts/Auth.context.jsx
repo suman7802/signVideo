@@ -186,6 +186,7 @@ function AuthProvider({children}) {
   return (
     <AuthContext.Provider
       value={{
+        url,
         otp,
         role,
         email,

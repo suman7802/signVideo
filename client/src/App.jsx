@@ -1,21 +1,21 @@
 import OTP from './pages/OTP';
-import Shop from './pages/Shop';
-import Login from './pages/Login';
-import Class from './pages/Class';
 import Cart from './pages/Cart';
-import Library from './pages/Library';
-import NavBar from './components/NavBar';
-import UploadForm from './pages/Upload';
+import Shop from './pages/Shop';
+import Class from './pages/Class';
+import Login from './pages/Login';
 import Logout from './pages/Logout';
+import Library from './pages/Library';
+import UploadForm from './pages/Upload';
+import NavBar from './components/NavBar';
+import {ToastContainer} from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import {AuthProvider} from './contexts/Auth.context';
 import FeaturedCourses from './pages/FeaturedCourses';
+import {UploadProvider} from './contexts/Upload.context';
+import {ShopContextProvider} from './contexts/Shop.context';
 import {BrowserRouter, Routes, Route} from 'react-router-dom';
 import {ClassCoursesProvider} from './contexts/ClassCourses.context';
 import {FeaturedCoursesProvider} from './contexts/FeaturedCourses.context';
-import {UploadProvider} from './contexts/Upload.context';
-import {ShopContextProvider} from './contexts/Shop.context';
-import {ToastContainer} from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
 
 export default function App() {
   return (

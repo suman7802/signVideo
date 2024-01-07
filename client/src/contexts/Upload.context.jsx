@@ -1,10 +1,10 @@
 import axios from 'axios';
 import {useReducer} from 'react';
 import PropTypes from 'prop-types';
-import {createContext} from 'react';
 import {toast} from 'react-toastify';
+import {AuthContext} from './Auth.context';
+import {createContext, useContext} from 'react';
 
-const url = `http://localhost:8000/api`;
 const UploadContext = createContext();
 
 const initialState = {
@@ -35,6 +35,13 @@ function reducer(state, action) {
 }
 
 function UploadProvider({children}) {
+  const context = useContext(AuthContext);
+
+  if (context === undefined) {
+    throw new Error('useAuth must be used within a AuthProvider');
+  }
+
+  const {url} = context;
   const [{title, category, course, thumbnail, uploading}, dispatch] =
     useReducer(reducer, initialState);
 

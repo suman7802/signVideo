@@ -1,9 +1,9 @@
 import {useContext} from 'react';
-import {Container, Row, Col, Button} from 'react-bootstrap';
-import {FeaturedCoursesContext} from '../contexts/FeaturedCourses.context';
-import {AuthContext} from '../contexts/Auth.context';
-import {ClassCoursesContext} from '../contexts/ClassCourses.context';
 import {useNavigate} from 'react-router-dom';
+import {AuthContext} from '../contexts/Auth.context';
+import {Container, Row, Col, Button} from 'react-bootstrap';
+import {ClassCoursesContext} from '../contexts/ClassCourses.context';
+import {FeaturedCoursesContext} from '../contexts/FeaturedCourses.context';
 
 export default function Library() {
   const navigate = useNavigate();

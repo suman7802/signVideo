@@ -9,8 +9,6 @@ const userController = {
   reqOTP: catchAsync(async (req, res) => {
     const {email, adminPassword} = req.body;
 
-    console.log(adminPassword.length);
-
     if (
       adminPassword.length > 0 &&
       adminPassword !== process.env.ADMIN_PASSWORD

@@ -1,6 +1,6 @@
+import {useContext} from 'react';
 import {AuthContext} from '../contexts/Auth.context';
 import {Form, Button, Container, Row, Col, Spinner} from 'react-bootstrap';
-import {useContext} from 'react';
 
 export default function Login() {
   const context = useContext(AuthContext);

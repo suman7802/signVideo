@@ -1,13 +1,15 @@
-import customError from '../errors/customError.js';
 const connectedUsers = {};
+import customError from '../errors/customError.js';
 
 export default function socket(io) {
   io.use((socket, next) => {
     const userId = socket.handshake.headers.cookie.signVideo;
+
     if (!userId) {
       const error = new customError('Unauthorized', 401);
       return next(error);
     }
+
     if (connectedUsers[userId] && connectedUsers[userId].length > 0) {
       const error = new customError(
         'user already logged in from from another location',
@@ -16,6 +18,7 @@ export default function socket(io) {
       socket.emit(error);
       return next(error);
     }
+    
     next();
   });
 

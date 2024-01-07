@@ -1,5 +1,5 @@
-import {useState, useContext} from 'react';
 import PropTypes from 'prop-types';
+import {useState, useContext} from 'react';
 import {Col, Button, Form} from 'react-bootstrap';
 import {ShopContext} from '../contexts/Shop.context';
 

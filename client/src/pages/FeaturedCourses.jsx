@@ -1,6 +1,6 @@
 import {useContext} from 'react';
-import {FeaturedCoursesContext} from '../contexts/FeaturedCourses.context';
 import {AuthContext} from '../contexts/Auth.context';
+import {FeaturedCoursesContext} from '../contexts/FeaturedCourses.context';
 
 export default function FeaturedCourses() {
   const context = useContext(FeaturedCoursesContext);

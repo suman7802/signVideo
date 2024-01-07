@@ -1,11 +1,11 @@
 import axios from 'axios';
 import PropTypes from 'prop-types';
-import {createContext} from 'react';
 import {toast} from 'react-toastify';
+import {AuthContext} from './Auth.context';
 import {useEffect, useReducer} from 'react';
+import {createContext, useContext} from 'react';
 
 const toastId = 'serverError';
-const url = 'http://localhost:8000/api';
 
 const initialState = {
   classCourses: [{}],
@@ -29,6 +29,13 @@ function reducer(state, action) {
 const ClassCoursesContext = createContext();
 
 function ClassCoursesProvider({children}) {
+  const context = useContext(AuthContext);
+
+  if (context === undefined) {
+    throw new Error('useAuth must be used within a AuthProvider');
+  }
+
+  const {url} = context;
   const [{classCourses, category, classCoursesLoading}, dispatch] = useReducer(
     reducer,
     initialState

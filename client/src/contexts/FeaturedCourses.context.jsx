@@ -6,7 +6,6 @@ import AllowedCourse from '../utils/AllowedCourse';
 import {createContext, useContext, useEffect, useReducer, useRef} from 'react';
 
 const toastId = 'serverError';
-const url = 'http://localhost:8000/api';
 const FeaturedCoursesContext = createContext();
 
 const initialState = {
@@ -29,16 +28,17 @@ function reducer(state, action) {
 
 function FeaturedCoursesProvider({children}) {
   const context = useContext(AuthContext);
-  const [{featuredCourses, isLoading}, dispatch] = useReducer(
-    reducer,
-    initialState
-  );
-  const originalCourses = useRef([]);
 
   if (context === undefined) {
     throw new Error('useAuth must be used within a AuthProvider');
   }
-  const {courses} = context;
+
+  const {courses, url} = context;
+  const originalCourses = useRef([]);
+  const [{featuredCourses, isLoading}, dispatch] = useReducer(
+    reducer,
+    initialState
+  );
 
   useEffect(() => {
     const fetchData = async () => {

@@ -1,5 +1,5 @@
-import {AuthContext} from '../contexts/Auth.context';
 import {useContext} from 'react';
+import {AuthContext} from '../contexts/Auth.context';
 
 export default function Logout() {
   const {handleLogout} = useContext(AuthContext);
