@@ -1,6 +1,7 @@
 import axios from 'axios';
 import PropTypes from 'prop-types';
 import {createContext} from 'react';
+import {toast} from 'react-toastify';
 import {useEffect, useReducer} from 'react';
 
 const url = 'http://localhost:8000/api';
@@ -42,7 +43,7 @@ function ClassCoursesProvider({children}) {
         dispatch({type: 'SET_CLASS_COURSES', payload: data});
       } catch (error) {
         console.error(error);
-        alert('Error in fetching the Courses');
+        toast.error('Error fetch courses Thumbnail');
       } finally {
         dispatch({type: 'SET_CLASS_COURSES_LOADING', payload: false});
       }
@@ -66,7 +67,7 @@ function ClassCoursesProvider({children}) {
       }
     } catch (error) {
       console.error(error);
-      alert('Error in opening the Course');
+      toast.error('Error in opening the Course');
     }
   };
 

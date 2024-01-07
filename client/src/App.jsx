@@ -14,6 +14,8 @@ import {ClassCoursesProvider} from './contexts/ClassCourses.context';
 import {FeaturedCoursesProvider} from './contexts/FeaturedCourses.context';
 import {UploadProvider} from './contexts/Upload.context';
 import {ShopContextProvider} from './contexts/Shop.context';
+import {ToastContainer} from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export default function App() {
   return (
@@ -36,6 +38,7 @@ export default function App() {
                   <Route path="/logout" element={<Logout />} />
                 </Routes>
               </UploadProvider>
+              <ToastContainer />
             </ClassCoursesProvider>
           </ShopContextProvider>
         </FeaturedCoursesProvider>

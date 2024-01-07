@@ -2,6 +2,7 @@ import axios from 'axios';
 import {useReducer} from 'react';
 import PropTypes from 'prop-types';
 import {createContext} from 'react';
+import {toast} from 'react-toastify';
 
 const url = `http://localhost:8000/api`;
 const UploadContext = createContext();
@@ -37,8 +38,9 @@ function UploadProvider({children}) {
   const [{title, category, course, thumbnail, uploading}, dispatch] =
     useReducer(reducer, initialState);
 
-  const handleTitleChange = (event) => {
-    dispatch({type: 'title', payload: event.target.value});
+  const handleTitleChange = (e) => {
+    const titleWithoutSpaces = e.target.value.replace(/\s/g, '');
+    dispatch({type: 'title', payload: titleWithoutSpaces});
   };
 
   const handleCategoryChange = (event) => {
@@ -54,16 +56,38 @@ function UploadProvider({children}) {
   };
 
   const handleSubmit = async (e) => {
-    dispatch({type: 'uploading', payload: true});
     e.preventDefault();
+
+    if (!title) {
+      return toast.error('Please fill the Title');
+    }
+
+    if (!category) {
+      return toast.error('Please fill the Subject');
+    }
+
+    if (!course) {
+      return toast.error('Please upload a course video');
+    } else if (!course.type.startsWith('video/')) {
+      return toast.error('Course file must be a video');
+    }
+
+    if (!thumbnail) {
+      return toast.error('Please upload a thumbnail image');
+    } else if (!thumbnail.type.startsWith('image/')) {
+      return toast.error('Thumbnail file must be an image');
+    }
+
+    dispatch({type: 'uploading', payload: true});
+
     const formData = new FormData();
+
     formData.append('title', title);
     formData.append('category', category);
 
     if (course) {
       formData.append('course', course);
     }
-
     if (thumbnail) {
       formData.append('thumbnail', thumbnail);
     }
@@ -72,13 +96,13 @@ function UploadProvider({children}) {
       const res = await axios.post(`${url}/course/upload`, formData, {
         withCredentials: true,
       });
+
       if (res.status === 200) {
-        dispatch({type: 'reset'});
-        alert('Upload success');
+        toast.success('Upload success');
       }
     } catch (error) {
       console.error(error);
-      alert('Upload failed');
+      toast.error('Upload failed');
     } finally {
       dispatch({type: 'reset'});
     }

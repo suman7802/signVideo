@@ -1,8 +1,9 @@
 import axios from 'axios';
 import PropTypes from 'prop-types';
-import {createContext, useContext, useEffect, useReducer, useRef} from 'react';
-import AllowedCourse from '../utils/AllowedCourse';
+import {toast} from 'react-toastify';
 import {AuthContext} from './Auth.context';
+import AllowedCourse from '../utils/AllowedCourse';
+import {createContext, useContext, useEffect, useReducer, useRef} from 'react';
 
 const url = 'http://localhost:8000/api';
 const FeaturedCoursesContext = createContext();
@@ -47,7 +48,7 @@ function FeaturedCoursesProvider({children}) {
         dispatch({type: 'FETCH_SUCCESS', payload: data});
       } catch (error) {
         console.error(error);
-        alert('Error in fetching the Courses');
+        toast.error('Error in fetching the Courses Thumbnail');
       }
     };
     fetchData();
@@ -57,7 +58,7 @@ function FeaturedCoursesProvider({children}) {
     const ownedCourse = AllowedCourse(public_id, courses);
 
     if (!ownedCourse) {
-      alert("you don't have access to this course");
+      toast.error("you don't have access to this course");
       return console.error("you don't have access to this course");
     }
 
@@ -72,7 +73,7 @@ function FeaturedCoursesProvider({children}) {
       }
     } catch (error) {
       console.error(error);
-      alert('Error Playing the video');
+      toast.error('Error Playing the video');
     }
   };
 

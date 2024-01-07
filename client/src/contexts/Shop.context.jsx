@@ -1,7 +1,8 @@
 import axios from 'axios';
 import PropTypes from 'prop-types';
-import {createContext, useState, useContext} from 'react';
+import {toast} from 'react-toastify';
 import {AuthContext} from './Auth.context';
+import {createContext, useState, useContext} from 'react';
 
 const url = 'http://localhost:8000/api';
 const ShopContext = createContext();
@@ -21,6 +22,7 @@ function ShopContextProvider({children}) {
 
   const checkout = async () => {
     setLoading(true);
+
     try {
       const response = await axios.post(
         `${url}/course/buy`,
@@ -29,17 +31,16 @@ function ShopContextProvider({children}) {
       );
 
       if (response.status === 200) {
-        setLoading(false);
         dispatch({
           type: 'UPDATE_COURSES',
           payload: response.data.courses,
         });
         saveToLocalStorage(true, response.data.role, response.data.courses);
-        alert('Checkout successful');
+        toast.success('Checkout successful');
       }
     } catch (error) {
       console.error('Checkout failed', error);
-      alert('Checkout failed');
+      toast.error('Checkout failed');
     } finally {
       setLoading(false);
       setCoursesToBuy([]);

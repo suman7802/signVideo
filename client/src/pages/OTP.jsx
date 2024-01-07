@@ -25,9 +25,9 @@ export default function OTP() {
                 onChange={(e) =>
                   dispatch({type: 'SET_EMAIL', payload: e.target.value})
                 }
-                required
               />
             </Form.Group>
+
             <Form.Group controlId="formBasicAdminPassword">
               <Form.Control
                 type="text"
@@ -36,7 +36,6 @@ export default function OTP() {
                 onChange={(e) =>
                   dispatch({type: 'SET_OTP', payload: e.target.value})
                 }
-                required
               />
             </Form.Group>
             <Button variant="primary" type="submit">

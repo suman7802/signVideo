@@ -1,6 +1,7 @@
 import Axios from 'axios';
 import {useEffect} from 'react';
 import PropTypes from 'prop-types';
+import {toast} from 'react-toastify';
 import {useNavigate} from 'react-router-dom';
 import {useReducer, createContext} from 'react';
 
@@ -111,7 +112,7 @@ function AuthProvider({children}) {
     if (email) {
       dispatch({type: 'SET_LOADING', payload: true});
     } else {
-      alert('Please enter your email');
+      toast.error('Please enter your email');
     }
 
     try {
@@ -125,22 +126,25 @@ function AuthProvider({children}) {
       );
       if (res.status === 200) {
         navigate('/otp');
+        toast.success('OTP sent');
       }
     } catch (error) {
       console.error('Login failed:', error.message);
-      alert('Login failed');
+      toast.error('Login failed');
     } finally {
       dispatch({type: 'SET_LOADING', payload: false});
     }
   };
 
   const submitOtp = async (event) => {
-    if (otp) {
+    event.preventDefault();
+
+    if (otp && email) {
       dispatch({type: 'SET_LOADING', payload: true});
     } else {
-      alert('Please enter your OTP');
+      toast.error('Please enter your OTP');
     }
-    event.preventDefault();
+
     try {
       const res = await Axios.post(
         `${url}/user/auth`,
@@ -165,10 +169,11 @@ function AuthProvider({children}) {
         });
         saveToLocalStorage(Authenticated, Role, Courses);
         navigate('/library');
+        toast.success('Login success');
       }
     } catch (error) {
       console.error('Login failed:', error.message);
-      alert('Login failed');
+      toast.error('Login failed');
     } finally {
       dispatch({type: 'SET_LOADING', payload: false});
     }

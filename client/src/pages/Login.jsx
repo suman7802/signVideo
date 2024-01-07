@@ -26,7 +26,6 @@ export default function Login() {
                 onChange={(e) =>
                   dispatch({type: 'SET_EMAIL', payload: String(e.target.value)})
                 }
-                required
               />
             </Form.Group>
 
