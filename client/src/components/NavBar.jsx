@@ -4,21 +4,26 @@ import CartLogo from '../assets/cart.svg';
 import {useLocation} from 'react-router-dom';
 import {ShopContext} from '../contexts/Shop.context';
 import {FeaturedCoursesContext} from '../contexts/FeaturedCourses.context';
+import {AuthContext} from '../contexts/Auth.context';
 import {Navbar, Nav, NavDropdown, Form, FormControl} from 'react-bootstrap';
 
 export default function NavBar() {
   const location = useLocation();
   const context = useContext(ShopContext);
+  const authContext = useContext(AuthContext);
   const featuredContext = useContext(FeaturedCoursesContext);
 
+  if (authContext === undefined) {
+    throw new Error('useAuth must be used within a AuthProvider');
+  }
   if (context === undefined) {
     throw new Error('useAuth must be used within a AuthProvider');
   }
-
   if (featuredContext === undefined) {
     throw new Error('useAuth must be used within a AuthProvider');
   }
 
+  const {role} = authContext;
   const {coursesToBuy} = context;
   const {search} = featuredContext;
 
@@ -41,9 +46,11 @@ export default function NavBar() {
           <Nav.Link as={NavLink} to="/shop">
             Shop
           </Nav.Link>
-          <Nav.Link as={NavLink} to="/upload">
-            Upload course
-          </Nav.Link>
+          {role === 'admin' && (
+            <Nav.Link as={NavLink} to="/upload">
+              Upload course
+            </Nav.Link>
+          )}
           <NavDropdown title="Account" id="basic-nav-dropdown">
             <NavDropdown.Item as={NavLink} to="/login">
               LogIn

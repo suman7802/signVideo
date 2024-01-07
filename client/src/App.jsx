@@ -35,6 +35,7 @@ export default function App() {
                   <Route path="/class" element={<Class />} />
                   <Route path="/cart" element={<Cart />} />
                   <Route path="/upload" element={<UploadForm />} />
+                  <Route path="/upload" element={<UploadForm />} />
                   <Route path="/logout" element={<Logout />} />
                 </Routes>
               </UploadProvider>
