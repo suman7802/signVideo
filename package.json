@@ -1,0 +1,18 @@
+{
+  "name": "signideo",
+  "version": "1.0.0",
+  "description": "postman Api = https://documenter.getpostman.com/view/27265804/2s9YkgD5js",
+  "main": "index.js",
+  "scripts": {
+    "install": "concurrently \"cd client && npm install\" \"cd server && npm install\"",
+    "client_build": "cd client && npm run build",
+    "server_start": "cd server && npm run start",
+    "start": "npm run install && npm run client_build && npm run server_start"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "concurrently": "^8.2.2"
+  }
+}
