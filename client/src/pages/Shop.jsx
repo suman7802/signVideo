@@ -29,8 +29,9 @@ export default function Shop() {
   const {featuredCourses, isLoading} = FeaturedCourses;
 
   const unsubscribedCourses = featuredCourses.filter(
-    (featuredCourse) =>
-      !courses.some((course) => course.course === featuredCourse.category)
+    (featuredCourse, index, self) =>
+      !courses.some((course) => course.course === featuredCourse.category) &&
+      index === self.findIndex((t) => t.category === featuredCourse.category)
   );
 
   return (
