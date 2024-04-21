@@ -4,7 +4,7 @@ import JWT from 'jsonwebtoken';
 import User from '../models/userModel.js';
 import customError from '../errors/customError.js';
 
-dotenv.config({path: '../.env'});
+dotenv.config();
 
 export default async function validateToken(req, res, next) {
   const token = req.cookies['signVideo'];
