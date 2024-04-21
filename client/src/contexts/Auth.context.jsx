@@ -6,7 +6,8 @@ import {useNavigate} from 'react-router-dom';
 import {useReducer, createContext} from 'react';
 
 const AuthContext = createContext();
-const url = 'https://signvideo.onrender.com/api';
+// const url = '/api';
+const url = 'http://localhost:8000/api';
 
 const initialState = {
   otp: '',
