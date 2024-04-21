@@ -4,7 +4,7 @@ import generateOTP from './generateOTP.js';
 import sendMailForOtp from './sendOTP.js';
 import otpExpireDuration from './otpExpireDuration.js';
 
-dotenv.config();
+dotenv.config({path: '../.env'});
 
 export default async function getCreateUser(email, role) {
   const user = await User.findOne({email});

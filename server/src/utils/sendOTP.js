@@ -2,7 +2,7 @@ import dotenv from 'dotenv';
 import {google} from 'googleapis';
 import nodemailer from 'nodemailer';
 
-dotenv.config();
+dotenv.config({path: '../.env'});
 
 const {
   USER_EMAIL,

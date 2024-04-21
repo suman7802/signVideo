@@ -4,7 +4,7 @@ import helmet from 'helmet';
 import morgan from 'morgan';
 import express from 'express';
 import {fileURLToPath} from 'url';
-import path, {dirname} from 'path'; 
+import path, {dirname} from 'path';
 import connectDB from './models/db.js';
 import cookieParser from 'cookie-parser';
 import cleanDir from './utils/clearTemp.js';
@@ -14,7 +14,7 @@ import streamRoute from './routes/streamRoute.js';
 import courseRoute from './routes/courseRoute.js';
 import errorHandler from './controllers/errorHandler.js';
 
-dotenv.config();
+dotenv.config({path: '../.env'});
 
 const app = express();
 const {NODE_ENV, PORT} = process.env;
