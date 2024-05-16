@@ -1,23 +1,24 @@
-import dotenv from 'dotenv';
-import {google} from 'googleapis';
-import nodemailer from 'nodemailer';
+import dotenv from "dotenv";
+import { google } from "googleapis";
+import nodemailer from "nodemailer";
 
-dotenv.config({path: '../.env'});
+dotenv.config({ path: "../.env" });
 
 const {
   USER_EMAIL,
   NODEMAILER_CLIENT_ID,
   NODEMAILER_REFRESH_TOKEN,
   NODEMAILER_CLIENT_SECRET,
+  ACESS_TOKEN,
 } = process.env;
 
-const {OAuth2} = google.auth;
+const { OAuth2 } = google.auth;
 
 const createTransporter = async () => {
   const oauth2Client = new OAuth2(
     NODEMAILER_CLIENT_ID,
     NODEMAILER_CLIENT_SECRET,
-    'https://developers.google.com/oauthplayground'
+    "https://developers.google.com/oauthplayground",
   );
 
   oauth2Client.setCredentials({
@@ -34,14 +35,15 @@ const createTransporter = async () => {
   });
 
   return nodemailer.createTransport({
-    service: 'gmail',
+    service: "gmail",
     auth: {
-      type: 'OAuth2',
+      type: "OAuth2",
       user: USER_EMAIL,
       accessToken,
       clientId: NODEMAILER_CLIENT_ID,
       clientSecret: NODEMAILER_CLIENT_SECRET,
       refreshToken: NODEMAILER_REFRESH_TOKEN,
+      accessToken: ACESS_TOKEN,
     },
   });
 };
@@ -49,11 +51,11 @@ const createTransporter = async () => {
 const sendMailForOtp = (otp, email) => {
   const emailConfig = {
     from: USER_EMAIL,
-    subject: 'OTP Verification',
+    subject: "OTP Verification",
     text: `Your OTP is : ${otp}\nExpiring in 3 minute..`,
     to: email,
   };
-  
+
   return new Promise(async (resolve, reject) => {
     return await createTransporter().then((transporter) => {
       transporter.sendMail(emailConfig, (err, info) => {
