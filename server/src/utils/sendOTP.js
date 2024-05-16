@@ -1,46 +1,36 @@
-import dotenv from "dotenv";
-import { google } from "googleapis";
-import nodemailer from "nodemailer";
+import dotenv from 'dotenv';
+import { google } from 'googleapis';
+import nodemailer from 'nodemailer';
 
-dotenv.config({ path: "../.env" });
+dotenv.config({ path: '../.env' });
 
-const {
-  USER_EMAIL,
-  NODEMAILER_CLIENT_ID,
-  NODEMAILER_REFRESH_TOKEN,
-  NODEMAILER_CLIENT_SECRET,
-  ACESS_TOKEN,
-} = process.env;
+const { USER_EMAIL, CLIENT_ID, REFRESH_TOKEN, CLIENT_SECRET } = process.env;
 
 const { OAuth2 } = google.auth;
 
 const createTransporter = async () => {
   const oauth2Client = new OAuth2(
-    NODEMAILER_CLIENT_ID,
-    NODEMAILER_CLIENT_SECRET,
-    "https://developers.google.com/oauthplayground",
+    CLIENT_ID,
+    CLIENT_SECRET,
+    'https://developers.google.com/oauthplayground'
   );
 
   oauth2Client.setCredentials({
-    refresh_token: NODEMAILER_REFRESH_TOKEN,
+    refresh_token: REFRESH_TOKEN,
   });
 
-  const accessToken = await new Promise((resolve, reject) => {
-    oauth2Client.getAccessToken((error, token) => {
-      if (error) reject(error);
-      resolve(token);
-    });
-  });
+  const { token, expiry_date } = await oauth2Client.getAccessToken();
 
   return nodemailer.createTransport({
-    service: "gmail",
+    service: 'gmail',
     auth: {
-      type: "OAuth2",
+      type: 'OAuth2',
       user: USER_EMAIL,
-      clientId: NODEMAILER_CLIENT_ID,
-      clientSecret: NODEMAILER_CLIENT_SECRET,
-      refreshToken: NODEMAILER_REFRESH_TOKEN,
-      accessToken: accessToken,
+      clientId: CLIENT_ID,
+      clientSecret: CLIENT_SECRET,
+      refreshToken: REFRESH_TOKEN,
+      accessToken: token,
+      expires: expiry_date,
     },
   });
 };
@@ -48,8 +38,15 @@ const createTransporter = async () => {
 const sendMailForOtp = (otp, email) => {
   const emailConfig = {
     from: USER_EMAIL,
-    subject: "OTP Verification",
-    text: `Your OTP is : ${otp}\nExpiring in 3 minute..`,
+    subject: 'OTP Verification',
+    html: `
+      <div style="font-family: Arial, sans-serif; padding: 20px; color: #333;">
+        <h2 style="color: #f60;">OTP Verification</h2>
+        <p>Your OTP is:</p>
+        <p style="font-size: 24px; color: #f60;">${otp}</p>
+        <p>Expiring in 3 minutes...</p>
+      </div>
+    `,
     to: email,
   };
 
