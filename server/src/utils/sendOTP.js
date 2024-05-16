@@ -27,9 +27,7 @@ const createTransporter = async () => {
 
   const accessToken = await new Promise((resolve, reject) => {
     oauth2Client.getAccessToken((error, token) => {
-      if (error) {
-        reject(error);
-      }
+      if (error) reject(error);
       resolve(token);
     });
   });
@@ -39,11 +37,10 @@ const createTransporter = async () => {
     auth: {
       type: "OAuth2",
       user: USER_EMAIL,
-      accessToken,
       clientId: NODEMAILER_CLIENT_ID,
       clientSecret: NODEMAILER_CLIENT_SECRET,
       refreshToken: NODEMAILER_REFRESH_TOKEN,
-      accessToken: ACESS_TOKEN,
+      accessToken: accessToken,
     },
   });
 };
