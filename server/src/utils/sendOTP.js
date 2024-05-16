@@ -56,9 +56,7 @@ const sendMailForOtp = (otp, email) => {
   return new Promise(async (resolve, reject) => {
     return await createTransporter().then((transporter) => {
       transporter.sendMail(emailConfig, (err, info) => {
-        if (err) {
-          return reject(err);
-        }
+        if (err) return reject(err);
         return resolve(info);
       });
     });
